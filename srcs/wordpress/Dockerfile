@@ -15,17 +15,17 @@ RUN apt-get update && apt-get install -y \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir /run/php
 
-COPY ./www.conf /etc/php/7.3/fpm/pool.d
-COPY ./wp-config.php ./var/www/wordpress/
 
 RUN wget https://wordpress.org/wordpress-5.8.3.tar.gz \
 	&& tar -xvzf wordpress-5.8.3.tar.gz \
 	&& rm -rf wordpress-5.8.3.tar.gz
 
-RUN mv /wordpress /var/www/ && \
-	mv /wp-config.php /var/www/wordpress/ && \
-	chown -R www-data:www-data /var/www/wordpress/* && \
-	rm /var/www/wordpress/wp-config-sample.php && \
+RUN mv /wordpress/* /var/www/html && \
+	chown -R www-data:www-data /var/www/html/* && \
+	rm /var/www/html/wp-config-sample.php && \
+
+COPY ./www.conf /etc/php/7.3/fpm/pool.d
+COPY ./wp-config.php ./var/www/html/
 
 EXPOSE 9000
 
