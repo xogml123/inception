@@ -7,20 +7,16 @@ server {
 	ssl_certificate /etc/ssl/nginx.crt;
 	ssl_certificate_key /etc/ssl/nginx.key;
 
-	# Set root dir of server
-	root /var/www/html;
+	server_name takim.42.fr;
+	
 
-	# Autoindex
-	index index.html index.htm index.php index.nginx-debian.html;
+	index index.php;
+    root /var/www/wordpress;
 
-	server_name ft_server;
-	location / {
-		autoindex on;
-		try_files $uri $uri/ =404;
-	}
-
-	# PHP
-	location ~ [^/]\.php(/|$) { 
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+    location ~ [^/]\.php(/|$) { 
             try_files $uri =404;
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
             fastcgi_pass wordpress:9000;

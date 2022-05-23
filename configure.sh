@@ -61,3 +61,5 @@ sudo su -c 'printf "{\n\t\"live-restore\": true\n}" > /etc/docker/docker.json'
 
 # 도커 서비스 재시작
 sudo systemctl restart docker
+
+sudo echo "127.0.0.1 $intra_id.42.fr" >> /etc/hosts
