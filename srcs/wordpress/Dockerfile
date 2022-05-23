@@ -1,16 +1,33 @@
 FROM debian:buster
 
-RUN apt-get update && \
-      apt-get -y install php7.3 php-mysqli php-fpm mariadb-client
-COPY ./www.conf /etc/php/7.3/fpm/pool.d
 
-ADD https://ru.wordpress.org/wordpress-5.7.2-ru_RU.tar.gz /var/www/
-RUN cd /var/www && tar -xzvf wordpress-5.7.2-ru_RU.tar.gz
-RUN rm -f /var/www/wordpress-5.7.2-ru_RU.tar.gz
-RUN rm -f /var/www/wordpress/wp-config-sample.php
+RUN apt-get update && apt-get install -y \
+	php7.3 \
+	php-fpm \
+	php-cli \
+	wget \
+	curl \
+	php-mysql \
+	php-mbstring \
+	php-xml \
+	sendmail \
+	mariadb-client \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& mkdir /run/php
+
+RUN wget https://wordpress.org/wordpress-5.8.3.tar.gz \
+	&& tar -xvzf wordpress-5.8.3.tar.gz \
+	&& rm -rf wordpress-5.8.3.tar.gz
+
+RUN mv /wordpress/* /var/www/html/ && \
+	mv /wp-config.php /var/www/html/ && \
+	chown -R www-data:www-data /var/www/html/* && \
+	rm /var/www/html/wp-config-sample.php && \
+      mv /var/www/html /var/www/wordpress 
+
+COPY ./www.conf /etc/php/7.3/fpm/pool.d
 COPY ./wp-config.php ./var/www/wordpress/
 
 EXPOSE 9000
 
-RUN mkdir ./run/php/
 CMD ./usr/sbin/php-fpm7.3 -F
