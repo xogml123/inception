@@ -4,9 +4,9 @@ RUN apt-get update && \
       apt-get -y install php7.3 php-mysqli php-fpm mariadb-client
 COPY ./www.conf /etc/php/7.3/fpm/pool.d
 
-ADD https://ru.wordpress.org/wordpress-5.7.2-ru_RU.tar.gz /var/www/
-RUN cd /var/www && tar -xzvf wordpress-5.7.2-ru_RU.tar.gz
-RUN rm -f /var/www/wordpress-5.7.2-ru_RU.tar.gz
+ADD https://ko.wordpress.org/wordpress-5.9.3-ko_KO.tar.gz /var/www/
+RUN cd /var/www && tar -xzvf wordpress-5.9.3-ko_KO.tar.gz
+RUN rm -f /var/www/wordpress-5.9.3-ko_KO.tar.gz
 RUN rm -f /var/www/wordpress/wp-config-sample.php
 COPY ./wp-config.php ./var/www/wordpress/
 
