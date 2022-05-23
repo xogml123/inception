@@ -23,7 +23,7 @@
 define( 'DB_NAME', 'mariadb');
 
 /** MySQL database username */
-define( 'DB_USER', 'takim' );
+define( 'DB_USER', 'takim');
 
 /** MySQL database password */
 define( 'DB_PASSWORD', 'takim');
