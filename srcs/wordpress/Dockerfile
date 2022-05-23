@@ -20,12 +20,14 @@ RUN wget https://wordpress.org/wordpress-5.8.3.tar.gz \
 	&& tar -xvzf wordpress-5.8.3.tar.gz \
 	&& rm -rf wordpress-5.8.3.tar.gz
 
-RUN mv /wordpress/* /var/www/html && \
-	chown -R www-data:www-data /var/www/html/* && \
-	rm /var/www/html/wp-config-sample.php && \
+RUN mkdir /var/www && \
+	mv /wordpress /var/www/ && \
+	chmod 777 /var/www/wordpress && \
+	chown -R www-data:www-data /var/www/wordpress/* && \
+	rm /var/www/wordpress/wp-config-sample.php && \
 
 COPY ./www.conf /etc/php/7.3/fpm/pool.d
-COPY ./wp-config.php ./var/www/html/
+COPY ./wp-config.php ./var/www/wordpress/
 
 EXPOSE 9000
 
