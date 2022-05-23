@@ -24,7 +24,7 @@ RUN mkdir /var/www && \
 	mv /wordpress /var/www/ && \
 	chmod 777 /var/www/wordpress && \
 	chown -R www-data:www-data /var/www/wordpress/* && \
-	rm /var/www/wordpress/wp-config-sample.php && \
+	rm /var/www/wordpress/wp-config-sample.php
 
 COPY ./www.conf /etc/php/7.3/fpm/pool.d
 COPY ./wp-config.php ./var/www/wordpress/
